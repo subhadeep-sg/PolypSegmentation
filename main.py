@@ -16,7 +16,8 @@ from tensorflow.keras.optimizers import RMSprop
 time_today = datetime.now()
 start = time()
 
-data_dir = 'C:/DATA/UGA Sem 3/ML for CV/polypsegcode/Kvasir-SEG'
+# data_dir = 'C:/DATA/UGA Sem 3/ML for CV/polypsegcode/Kvasir-SEG'
+data_dir = '/content/PolypSegmentation/Kvasir-SEG'
 dataset_type = 'kvasir'
 model_type = 'duck'
 
