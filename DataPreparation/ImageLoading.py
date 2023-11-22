@@ -37,10 +37,10 @@ def data_load(data_dir=None, img_height=224, img_width=224, img_path=None, msk_p
         X_dataset[i] = img / 255.0
         Y_dataset[i] = mask
 
-        # Checking datatype of img and mask
-        if i == 0:
-            print(type(img))
-            print(type(mask))
+        # # Checking datatype of img and mask
+        # if i == 0:
+        #     print(type(img))
+        #     print(type(mask))
     Y_dataset = np.expand_dims(Y_dataset, axis=-1)
 
     return X_dataset, Y_dataset
@@ -85,5 +85,9 @@ def input_ready(image, masks, seed_value=0):
 
     x_test = tf.convert_to_tensor(x_test)
     y_test = tf.convert_to_tensor(y_test)
+
+    print(type(x_train_aug))
+    print(type(x_valid))
+    print(type(x_test))
 
     return zip(x_train_aug, y_train_aug), zip(x_valid, y_valid), zip(x_test, y_test)
