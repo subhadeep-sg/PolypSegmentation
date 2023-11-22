@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import os
 import gc
 import pickle
 import matplotlib.pyplot as plt
@@ -87,6 +88,9 @@ model_path = 'ModelSaveTensorFlow/' + dataset_type + '/' + model_type + '_filter
              str(filters) + '_' + str(time_today)
 
 final_file = 'results_' + model_type + '_' + str(filters) + '_' + dataset_type + '.txt'
+
+
+os.makedirs(final_file)
 
 # Model Training
 for epoch in range(epochs):
