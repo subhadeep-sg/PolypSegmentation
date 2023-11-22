@@ -1,5 +1,5 @@
-from keras.layers import BatchNormalizationV2, add
-from keras.layers import Conv2D
+from tensorflow.keras.layers import BatchNormalizationV2, add
+from tensorflow.keras.layers import Conv2D
 
 kernel_initializer = 'he_uniform'
 

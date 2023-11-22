@@ -1,7 +1,7 @@
 import tensorflow as tf
-from keras.layers import Conv2D, UpSampling2D
-from keras.layers import add
-from keras.models import Model
+from tensorflow.keras.layers import Conv2D, UpSampling2D
+from tensorflow.keras.layers import add
+from tensorflow.keras.models import Model
 
 import sys
 sys.path.append('/content/PolypSegmentation/CustomLayers')
