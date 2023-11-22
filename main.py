@@ -14,7 +14,7 @@ sys.path.append('/content/PolypSegmentation/CustomLayers')
 sys.path.append('/content/PolypSegmentation/DataPreparation')
 sys.path.append('/content/PolypSegmentation')
 
-from DataPreparation.ImageLoading import data_load, input_ready
+from ImageLoading import data_load, input_ready
 
 from tensorflow.keras.optimizers import RMSprop
 

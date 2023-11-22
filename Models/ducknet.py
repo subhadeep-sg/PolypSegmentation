@@ -8,7 +8,7 @@ sys.path.append('/content/PolypSegmentation/CustomLayers')
 sys.path.append('/content/PolypSegmentation')
 
 
-from PolypSegmentation.CustomLayers.ConvBlock2D import conv_block_2D
+from ConvBlock2D import conv_block_2D
 
 kernel_initializer = 'he_uniform'
 interpolation = "nearest"
