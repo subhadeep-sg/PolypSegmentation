@@ -8,6 +8,12 @@ from datetime import datetime
 from time import time
 from Models.Metrics import dice_loss, prediction_metrics, write_results_file
 from Models import ducknet
+
+import sys
+sys.path.append('/content/PolypSegmentation/CustomLayers')
+sys.path.append('/content/PolypSegmentation/DataPreparation')
+sys.path.append('/content/PolypSegmentation')
+
 from DataPreparation.ImageLoading import data_load, input_ready
 
 from tensorflow.keras.optimizers import RMSprop

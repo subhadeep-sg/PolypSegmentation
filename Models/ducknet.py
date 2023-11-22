@@ -4,8 +4,8 @@ from keras.layers import add
 from keras.models import Model
 
 import sys
-sys.append('/content/PolypSegmentation/CustomLayers')
-sys.append('/content/PolypSegmentation')
+sys.path.append('/content/PolypSegmentation/CustomLayers')
+sys.path.append('/content/PolypSegmentation')
 
 
 from PolypSegmentation.CustomLayers.ConvBlock2D import conv_block_2D
