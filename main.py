@@ -47,6 +47,20 @@ image_augmented, mask_augmented = zip(*train)
 x_valid, y_valid = zip(*valid)
 x_test, y_test = zip(*test)
 
+
+image_augmented = tf.convert_to_tensor(image_augmented)
+mask_augmented = tf.convert_to_tensor(mask_augmented)
+
+x_valid = tf.convert_to_tensor(x_valid)
+y_valid = tf.convert_to_tensor(y_valid)
+
+x_test = tf.convert_to_tensor(x_test)
+y_test = tf.convert_to_tensor(y_test)
+
+print(type(image_augmented))
+print(type(x_valid))
+print(type(x_test))
+
 # Model Parameters
 learning_rate = 1e-4
 filters = 17  # Number of filters, the paper used 17 and 34
@@ -81,10 +95,6 @@ for epoch in range(epochs):
     print('Learning Rate: ' + str(learning_rate))
 
     csv_logger = CSVLogger(progress_path, separator=';', append=True)
-
-    print('Debugging at this point:::!!!!!!!!!')
-    print(type(x_valid))
-    print(type(y_valid))
 
     model.fit(x=image_augmented, y=mask_augmented, epochs=1, batch_size=4, validation_data=(x_valid, y_valid),
               verbose=1, callbacks=[csv_logger])

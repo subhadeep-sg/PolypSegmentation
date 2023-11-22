@@ -74,20 +74,6 @@ def input_ready(image, masks, seed_value=0):
                                                           test_size=0.111,
                                                           shuffle=True,
                                                           random_state=seed_value)
-
     x_train_aug, y_train_aug = augmentation(x_train, y_train)
-
-    x_train_aug = tf.convert_to_tensor(x_train_aug)
-    y_train_aug = tf.convert_to_tensor(y_train_aug)
-
-    x_valid = tf.convert_to_tensor(x_valid)
-    y_valid = tf.convert_to_tensor(y_valid)
-
-    x_test = tf.convert_to_tensor(x_test)
-    y_test = tf.convert_to_tensor(y_test)
-
-    print(type(x_train_aug))
-    print(type(x_valid))
-    print(type(x_test))
 
     return zip(x_train_aug, y_train_aug), zip(x_valid, y_valid), zip(x_test, y_test)
