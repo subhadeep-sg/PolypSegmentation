@@ -10,6 +10,7 @@ from Models.Metrics import dice_loss, prediction_metrics, write_results_file
 from Models import ducknet
 
 import sys
+
 sys.path.append('/content/PolypSegmentation/CustomLayers')
 sys.path.append('/content/PolypSegmentation/DataPreparation')
 sys.path.append('/content/PolypSegmentation')
@@ -31,7 +32,6 @@ model_type = 'duck'
 image_path = None
 mask_path = None
 
-
 # Constants
 img_height = 352
 img_width = 352
@@ -47,20 +47,17 @@ image_augmented, mask_augmented = zip(*train)
 x_valid, y_valid = zip(*valid)
 x_test, y_test = zip(*test)
 
-
 # Model Parameters
 learning_rate = 1e-4
 filters = 17  # Number of filters, the paper used 17 and 34
 epochs = 5  # Authors use 600
 min_loss_for_saving = 0.2
 
-
 # Creating Model
 model = ducknet.create_model(img_height=img_height, img_width=img_width, input_channels=3,
                              out_classes=1,
                              starting_filters=filters)
 model.compile(optimizer=RMSprop(learning_rate=learning_rate), loss=dice_loss)
-
 
 # Paths for storing model results
 progress_path = 'ProgressFull/' + dataset_type + '_progress_csv_' + model_type + '_filters_' + \
@@ -86,14 +83,8 @@ for epoch in range(epochs):
     csv_logger = CSVLogger(progress_path, separator=';', append=True)
 
     print('Debugging at this point:::!!!!!!!!!')
-    print(type(image_augmented))
-    print(type(mask_augmented))
-
-    image_augmented = tf.convert_to_tensor(image_augmented)
-    mask_augmented = tf.convert_to_tensor(image_augmented)
-
-    print(type(image_augmented))
-    print(type(mask_augmented))
+    print(type(x_valid))
+    print(type(y_valid))
 
     model.fit(x=image_augmented, y=mask_augmented, epochs=1, batch_size=4, validation_data=(x_valid, y_valid),
               verbose=1, callbacks=[csv_logger])
@@ -129,9 +120,5 @@ dice, iou, precision, recall, accuracy = prediction_metrics(model, train, valid,
 
 write_results_file(final_file, dice, iou, precision, recall, accuracy, dataset_type=dataset_type)
 
-
 end = time.time()
-print('Execution time:', (end-start)/60, 'minutes')
-
-
-
+print('Execution time:', (end - start) / 60, 'minutes')
