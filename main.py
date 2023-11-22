@@ -86,12 +86,16 @@ for epoch in range(epochs):
     csv_logger = CSVLogger(progress_path, separator=';', append=True)
 
     print('Debugging at this point:::!!!!!!!!!')
-    print(len(image_augmented))
-    print(len(mask_augmented))
     print(type(image_augmented))
     print(type(mask_augmented))
 
-    model.fit(x=np.array(image_augmented), y=np.array(mask_augmented), epochs=1, batch_size=4, validation_data=(x_valid, y_valid),
+    image_augmented = tf.convert_to_tensor(image_augmented)
+    mask_augmented = tf.convert_to_tensor(image_augmented)
+
+    print(type(image_augmented))
+    print(type(mask_augmented))
+
+    model.fit(x=image_augmented, y=mask_augmented, epochs=1, batch_size=4, validation_data=(x_valid, y_valid),
               verbose=1, callbacks=[csv_logger])
 
     prediction_valid = model.predict(x_valid, verbose=0)
