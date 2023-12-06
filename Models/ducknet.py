@@ -4,9 +4,11 @@ from tensorflow.keras.layers import add
 from tensorflow.keras.models import Model
 
 import sys
-sys.path.append('/content/PolypSegmentation/CustomLayers')
-sys.path.append('/content/PolypSegmentation')
+# sys.path.append('/content/PolypSegmentation/CustomLayers')
+# sys.path.append('/content/PolypSegmentation')
 
+sys.path.append('C:/DATA/UGA Sem 3/ML for CV/polypsegcode/PolypSegmentation/CustomLayers')
+sys.path.append('C:/DATA/UGA Sem 3/ML for CV/polypsegcode/PolypSegmentation')
 
 from ConvBlock2D import conv_block_2D
 

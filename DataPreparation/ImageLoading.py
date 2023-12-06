@@ -8,14 +8,22 @@ from albumentations import ColorJitter, Compose, HorizontalFlip, Affine, Vertica
 from typing_extensions import Concatenate
 
 
-def data_load(data_dir=None, img_height=224, img_width=224, img_path=None, msk_path=None):
-    if data_dir:
-        images_path = data_dir + '/images/'
-        masks_path = data_dir + '/masks/'
+def data_load(data_dir=None, img_height=224, img_width=224, img_path=None, msk_path=None, ds_type='kvasir'):
+    if ds_type == 'cvc':
+        if data_dir:
+            images_path = data_dir + '/PNG/Original/'
+            masks_path = data_dir + '/PNG/Ground Truth/'
+        elif img_path and msk_path:
+            images_path = img_path
+            masks_path = msk_path
+    else:
+        if data_dir:
+            images_path = data_dir + '/images/'
+            masks_path = data_dir + '/masks/'
 
-    elif img_path and msk_path:
-        images_path = img_path
-        masks_path = msk_path
+        elif img_path and msk_path:
+            images_path = img_path
+            masks_path = msk_path
 
     assert data_dir is None or (img_path is None and msk_path is None), "Provide either dataset path or image " \
                                                                         "and mask path separately "
@@ -24,10 +32,16 @@ def data_load(data_dir=None, img_height=224, img_width=224, img_path=None, msk_p
 
     masks_names = os.listdir(masks_path)
 
-    X_dataset = np.zeros((len(img_names), img_height, img_width, 3), dtype=np.float32)
-    Y_dataset = np.zeros((len(img_names), img_height, img_width), dtype=np.uint8)
+    # ---------------------------------------------------
+    # REDUCING DATASET SIZE FOR DEBUGGING:
+    # -------------------------------------------------------
 
-    for i in range(len(img_names)):
+    dataset_length = int(len(img_names)/10)
+
+    X_dataset = np.zeros((dataset_length, img_height, img_width, 3), dtype=np.float32)
+    Y_dataset = np.zeros((dataset_length, img_height, img_width), dtype=np.uint8)
+
+    for i in range(dataset_length):
         img = cv2.imread(images_path + img_names[i])
         img = cv2.resize(img, (img_height, img_width))
 

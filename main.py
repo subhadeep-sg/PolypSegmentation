@@ -11,12 +11,14 @@ from Models.Metrics import dice_loss, prediction_metrics, write_results_file
 from Models import ducknet
 
 import sys
+# sys.path.append('/content/PolypSegmentation/CustomLayers')
+# sys.path.append('/content/PolypSegmentation/DataPreparation')
+# sys.path.append('/content/PolypSegmentation')
+sys.path.append('C:/DATA/UGA Sem 3/ML for CV/polypsegcode/PolypSegmentation/CustomLayers')
+sys.path.append('C:/DATA/UGA Sem 3/ML for CV/polypsegcode/PolypSegmentation/DataPreparation')
+sys.path.append('C:/DATA/UGA Sem 3/ML for CV/polypsegcode/PolypSegmentation')
 
-sys.path.append('/content/PolypSegmentation/CustomLayers')
-sys.path.append('/content/PolypSegmentation/DataPreparation')
-sys.path.append('/content/PolypSegmentation')
-
-from ImageLoading import data_load, input_ready
+from DataPreparation.ImageLoading import data_load, input_ready
 
 from tensorflow.keras.optimizers import RMSprop
 
@@ -24,9 +26,9 @@ from tensorflow.keras.optimizers import RMSprop
 time_today = datetime.now()
 start = time()
 
-# data_dir = 'C:/DATA/UGA Sem 3/ML for CV/polypsegcode/Kvasir-SEG'
-data_dir = '/content/PolypSegmentation/Kvasir-SEG'
-dataset_type = 'kvasir'
+data_dir = 'C:/DATA/UGA Sem 3/ML for CV/polypsegcode/cvcclinicdb'
+# data_dir = '/content/PolypSegmentation/Kvasir-SEG'
+dataset_type = 'cvc'
 model_type = 'duck'
 
 # Alternatively if you have paths for images and masks:
@@ -39,7 +41,8 @@ img_width = 352
 seed = 0
 
 # Enter data directory to process and output data ready to be input into model
-X, y = data_load(data_dir, img_height=img_height, img_width=img_width, img_path=image_path, msk_path=mask_path)
+X, y = data_load(data_dir, img_height=img_height, img_width=img_width, img_path=image_path, msk_path=mask_path,
+                 ds_type=dataset_type)
 
 train, valid, test = input_ready(X, y, seed_value=seed)
 
@@ -47,6 +50,11 @@ train, valid, test = input_ready(X, y, seed_value=seed)
 image_augmented, mask_augmented = zip(*train)
 x_valid, y_valid = zip(*valid)
 x_test, y_test = zip(*test)
+
+
+print(f"Length of training set:{len(image_augmented)}")
+print(f"Length of validation set:{len(x_valid)}")
+print(f"Length of test set:{len(x_test)}")
 
 
 image_augmented = tf.convert_to_tensor(image_augmented)
@@ -58,14 +66,14 @@ y_valid = tf.convert_to_tensor(y_valid)
 x_test = tf.convert_to_tensor(x_test)
 y_test = tf.convert_to_tensor(y_test)
 
-print(type(image_augmented))
-print(type(x_valid))
-print(type(x_test))
+# print(type(image_augmented))
+# print(type(x_valid))
+# print(type(x_test))
 
 # Model Parameters
 learning_rate = 1e-4
 filters = 17  # Number of filters, the paper used 17 and 34
-epochs = 5  # Authors use 600
+epochs = 2  # Authors use 600
 min_loss_for_saving = 0.2
 
 # Creating Model
@@ -89,8 +97,8 @@ model_path = 'ModelSaveTensorFlow/' + dataset_type + '/' + model_type + '_filter
 
 final_file = 'results_' + model_type + '_' + str(filters) + '_' + dataset_type + '.txt'
 
-
-os.makedirs(final_file)
+# if not os.path.exists(final_file):
+#     os.makedirs(final_file)
 
 # Model Training
 for epoch in range(epochs):

@@ -97,7 +97,7 @@ def write_results_file(final_file, dice, iou, precision, recall, accuracy, datas
     recall_train, recall_valid, recall_test = zip(*recall)
     accuracy_train, accuracy_valid, accuracy_test = zip(*accuracy)
 
-    with open(final_file, 'a') as f:
+    with open(final_file, 'x') as f:
         f.write(dataset_type + '\n')
         f.write('dice_train:' + str(dice_train) + ' dice_valid:' + str(dice_valid) + ' dice_test:' + str(dice_test) + '\n\n')
         f.write('mean_iou_train:' + str(iou_train) + ' mean_iou_valid:' + str(iou_valid) + ' mean_iou_test:' + str(iou_test) + '\n\n')
